@@ -17,7 +17,7 @@ jobs:
       - run:
           name: Build and run tests
           command: |
-            platformio test -e esp32
+            platformio test -e esp32dev
 
       - run:
           name: Deploy binary to S3
