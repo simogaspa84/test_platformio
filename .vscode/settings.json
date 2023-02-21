@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "sdkconfig.h": "c",
+        "eth_phy_regs_struct.h": "c",
+        "enc28j60.h": "c",
+        "*.tcc": "cpp",
+        "fstream": "cpp",
+        "istream": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp"
+    }
+}
