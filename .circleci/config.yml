@@ -19,6 +19,8 @@ jobs:
           command: |
             pip install awscli --force-reinstall --upgrade
             aws configure set default.region eu-central-1
+            aws configure set aws_access_key_id AKIA3ET4LVU5FZCL2ZIO
+            aws configure set aws_secret_access_key 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
 
 workflows:
   main:
