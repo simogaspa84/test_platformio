@@ -1,40 +1,43 @@
 version: 2.1
+orbs:
+  python: circleci/python@1.4.0
+  jira: circleci/jira@1.0.5
 
 jobs:
   build:
-    working_directory: ~/project
+  working_directory: ~/project
 
-    environment:
-      AWS_REGION: us-west-2
+  environment:
+    AWS_REGION: us-west-2
 
-    steps:
-      - checkout
+  steps:
+    - checkout
 
-      - run:
-          name: Install dependencies
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y python3-pip
-            pip3 install platformio
+    - run:
+        name: Install dependencies
+        command: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install platformio
 
-      - run:
-          name: Build project
-          command: |
-            platformio run
+    - run:
+        name: Build project
+        command: |
+          platformio run
 
-      - run:
-          name: Deploy and run tests on remote machine
-          command: |
-            ssh -i $SSH_PRIVATE_KEY root@$REMOTE_HOST << EOF
-            cd ~/project
-            platformio test -e esp32
-            EOF
+    - run:
+        name: Deploy and run tests on remote machine
+        command: |
+          ssh -i $SSH_PRIVATE_KEY root@$REMOTE_HOST << EOF
+          cd ~/project
+          platformio test -e esp32
+          EOF
 
-      - run:
-          name: Deploy binary to S3
-          command: |
-            sudo apt-get install -y awscli
-            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-            aws configure set default.region $AWS_REGION
-            aws s3 cp .pioenvs/esp32/firmware.bin s3://my-bucket/firmware.bin
+    - run:
+        name: Deploy binary to S3
+        command: |
+          sudo apt-get install -y awscli
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          aws configure set default.region $AWS_REGION
+          aws s3 cp .pioenvs/esp32/firmware.bin s3://my-bucket/firmware.bin
