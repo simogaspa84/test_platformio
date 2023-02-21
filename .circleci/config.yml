@@ -21,6 +21,7 @@ jobs:
             aws configure set default.region eu-central-1
             aws configure set aws_access_key_id AKIA3ET4LVU5FZCL2ZIO
             aws configure set aws_secret_access_key 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
+            aws s3 cp .pio/build/esp32dev/firmware.bin s3://mybucketplatformio/firmware.bin
 
 workflows:
   main:
